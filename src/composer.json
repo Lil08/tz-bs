@@ -1,0 +1,26 @@
+{
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.3.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "vlucas/phpdotenv": "3.3.3"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "2.1.4",
+        "yiisoft/yii2-gii": "2.1.0"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}

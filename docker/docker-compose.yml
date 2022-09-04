@@ -1,0 +1,29 @@
+version: "2.2"
+
+services:
+  web:
+    image: nginx:1.13.0
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/bc.conf:/etc/nginx/conf.d/bc.conf
+      - ../src:/var/www
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build: ./php-fpm
+    working_dir: /var/www
+    volumes:
+      - ../src:/var/www
+    depends_on:
+      - db
+
+  db:
+    image: percona:5.7.17
+    environment:
+      MYSQL_DATABASE: "bc"
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - ./storage/percona:/var/lib/mysql
+    command: --innodb-use-native-aio=0
