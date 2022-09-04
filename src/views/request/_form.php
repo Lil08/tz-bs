@@ -17,8 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'manager_id')->dropDownList(Manager::getList(), ['prompt' => '']) ?>
-
     <?= $form->field($model, 'text')->textarea(['rows' => 10]) ?>
 
     <div class="form-group">

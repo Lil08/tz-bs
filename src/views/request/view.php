@@ -32,6 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->manager ? $model->manager->name : null
             ],
             'text:ntext',
+            [
+                'attribute' => 'Предыдущая заявка',
+                'format' => 'html',
+                'value' => $model->getLastRequest() ? Html::a('№ ' . $model->getLastRequest()->id, ['view', 'id' => $model->getLastRequest()->id]) : '-'
+            ]
         ],
     ]) ?>
 
