@@ -11,6 +11,7 @@ use yii\db\Expression;
  * @property string $updated_at
  * @property string $name
  * @property int $is_works
+ * @property int $counter
  */
 class Manager extends \yii\db\ActiveRecord
 {
@@ -35,6 +36,7 @@ class Manager extends \yii\db\ActiveRecord
             [['name', 'is_works'], 'required'],
             ['name', 'string', 'max' => 255],
             ['is_works', 'boolean'],
+            ['counter', 'integer']
         ];
     }
 

@@ -1,46 +1,31 @@
 <?php
 
+use app\models\Manager;
+use app\models\Request;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ManagerSearch */
+/* @var $searchModel app\models\RequestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $managerName */
 
-$this->title = 'Менеджеры';
+$this->title = 'Заявки';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="manager-index">
+<div class="request-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Добавить нового менеджера', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h1><?= Html::encode($this->title . ' менеджера ' . $managerName) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'created_at:datetime',
-            'updated_at:datetime',
-            'name',
-            'is_works:boolean',
-            [
-                'class' => yii\grid\ActionColumn::class,
-                'template' => '{view}',
-                'buttons' => [
-                    'view' => function ($url, $model) {
-                        return Html::a('Заявки', ['/request/manager', 'id' => $model->id], [
-                            'class' => 'btn btn-success',
-                        ]);
-                    },
-                ],
-                'contentOptions' => ['style' => 'width:1px'],
-            ],
+            'email:email',
+            'phone',
             [
                 'class' => yii\grid\ActionColumn::class,
                 'template' => '{view}',
@@ -67,6 +52,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
 
 </div>

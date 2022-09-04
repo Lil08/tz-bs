@@ -39,6 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute' => 'Предыдущая заявка',
+                'format' => 'html',
+                'value' => function (Request $request) {
+                    return $request->getLastRequest() ? Html::a('№ ' . $request->getLastRequest()->id, ['view', 'id' => $request->getLastRequest()->id]) : '-';
+                }
+            ],
+            [
                 'class' => yii\grid\ActionColumn::class,
                 'template' => '{view}',
                 'buttons' => [

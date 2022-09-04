@@ -62,4 +62,56 @@ class Request extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Manager::class, ['id' => 'manager_id']);
     }
+
+    public function getLastRequest()
+    {
+        $date = new \DateTime('-30 days');
+        $date = $date->format('Y-m-d H:i:s');
+
+        $request = Request::find()
+            ->where(['phone' => $this->phone])
+            ->orWhere(['email' => $this->email])
+            ->andWhere(['>=', 'created_at', $date])
+            ->andWhere(['!=', 'id', $this->id])
+            ->orderBy(['created_at' => SORT_DESC])
+            ->one();
+
+        return $request ?? null;
+    }
+
+    public function getAutoManager($managerId = null)
+    {
+        if(empty($managerId)) {
+            $manager = Manager::find()
+                ->where(['is_works' => true])
+                ->orderBy(['counter' => SORT_ASC])
+                ->one();
+        }else{
+            $manager = Manager::findOne($managerId);
+        }
+
+        $counter = $manager->counter + 1;
+        $manager->setAttribute('counter', $counter);
+        $manager->save();
+
+        return $manager->id;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!$this->manager_id) {
+            $lastRequest = $this->getLastRequest();
+            if($lastRequest){
+                $manager = Manager::findOne($lastRequest->manager_id);
+                if($manager && $manager->is_works){
+                    $this->manager_id = $this->getAutoManager($lastRequest->manager_id);
+                }else{
+                    $this->manager_id = $this->getAutoManager();
+                }
+            }else{
+                $this->manager_id = $this->getAutoManager();
+            }
+        }
+        return parent::beforeSave($insert);
+    }
 }

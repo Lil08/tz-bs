@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Manager;
 use Yii;
 use app\models\Request;
 use app\models\RequestSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -52,6 +54,17 @@ class RequestController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionManager($id)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Request::find()->where(['manager_id' => $id])
+        ]);
+
+        $managerName = Manager::findOne($id)->name;
+
+        return $this->render('manager', compact('dataProvider', 'managerName'));
     }
 
     protected function findModel($id)

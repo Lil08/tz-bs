@@ -28,13 +28,6 @@ class ManagerController extends Controller
         ]);
     }
 
-    public function actionRequest($id)
-    {
-        return $this->render('request', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
     public function actionCreate()
     {
         $model = new Manager();
